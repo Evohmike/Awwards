@@ -7,7 +7,7 @@
       <span style="font-size:30px; cursor:pointer" onclick="openNav()">&#9776; Menu</span> 
       <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"> &times;</a>
-        <a href="#">Home</a>
+        <a href="/">Home</a>
         <a href="#">Winners</a>
         <a href="#">Nominees</a>
         <a href="#">Colletions</a>
@@ -29,6 +29,7 @@
     </div>
   </div>
   <div class="col-xs-1 col-md-1 ">
+    {% if user.is_authenticated %}
     <div class="dropdown">
       <a class="btn  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span style="cursor:pointer">&#9776;</span>
@@ -36,13 +37,16 @@
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="#">Profile</a>
         <a class="dropdown-item" href="#">Activity</a>
-        <a class="dropdown-item" href="#">Settings</a>
-        <a class="dropdown-item" href="#">Logout</a>
+        <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+        <a class="dropdown-item" href="/logout">Logout</a>
+        {%else%}
+        <a class="dropdown-item" href="/accounts/login">Login</a>
+        {% endif%}
         
       </div>
      </div>
   </div>
   <div class="col-xs-2 col-md-2" id="omena" style="background-color:aqua;">
-    <a class="btn" href="/accounts/login" style="color: white;">Submit your site</a>
+    <a class="btn" href="" style="color: white;">Submit your site</a>
   </div>
 </nav> 
