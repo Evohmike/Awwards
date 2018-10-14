@@ -1,7 +1,5 @@
-from django.shortcuts import render
-
-from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
 from .forms import SignupForm
 from django.contrib.sites.shortcuts import get_current_site
@@ -11,6 +9,9 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -39,6 +40,23 @@ def signup(request):
     else:
         form = SignupForm()
     return render(request, 'signup.html', {'form': form})
+
+
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 def home(request):
     return render(request, 'home.html')
