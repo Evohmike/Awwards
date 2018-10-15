@@ -1,13 +1,45 @@
-{%extends 'base.html'%}
-
+{%extends 'base.html'%} 
 {% block content %}
-<section>
 
-  <!-- section for the landing page which is 400px high at full screen -->
-  <div class="landing container-fluid p-0">
-      <div id="landing-img" class=" d-flex align-items-start">
-          <img class="w-100" src="/static/images/cover-2.jpg" alt="">
-      </div>
-      
-  </div>
-{% endblock  %}
+<div class="container-fluid" style="background-image: url(/static/images/cover-2.jpg)">
+    <div class="header" style="height: 80vh; font-family: 'Encode Sans Expanded', sans-serif;">
+        <div class="container" style="color:white;">
+            <div class="row" style="padding-top:50px;">
+                <div class="col-md-4">
+                    <strong>Site of the day</strong> {{date|date:"F d, Y"}}
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+                    <a class="btn" href="" style="color:white;">Collect</a>
+                </div>
+            </div>
+            <div style="text-align:center; font-size: 70px; padding-top:30px; letter-spacing: 1px;">
+                <p>Roche Musiquie</p>
+            </div>
+            <div style="text-align:center;">
+                <p>BY <strong style="color:#49c5b6;">Evoh Mike</strong> FROM KENYA WITH <strong>7.39</strong></p>
+            </div>
+            <div style="height:230px;">
+
+            </div>
+            <div>
+                <div id="box" class="col-md-4">
+                    <button class="btn" style="color: white; border-radius: 5em; background-color: #49c5b6; border:none; padding: 2px; width: 80px;">Visit</button>
+                    <button class="btn" style="color: white; border-radius: 5em; background-color: transparent; border:1px solid #49c5b6; padding: 2px; width: 80px;">
+                        likes </button>
+                    <button class="btn" style="color: white; border-radius: 5em; background-color: transparent; border:1px solid white; padding: 2px; width: 80px;">Collect</button>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+{% endblock %}
