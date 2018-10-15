@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 from django.contrib.auth.decorators import login_required
+from .models import Post,Profile,tags
 
 
 
@@ -59,7 +60,8 @@ def activate(request, uidb64, token):
         return HttpResponse('Activation link is invalid!')
 @login_required(login_url='/signup/')
 def home(request):
-    return render(request, 'home.html')
+    projects=Post.objects.all()
+    return render(request, 'home.html',{"projects":projects})
 
 
 def new_image(request):
@@ -68,7 +70,6 @@ def new_image(request):
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.user = profile
             # image.profile = profile
             image.save()
         return redirect('home')
@@ -76,3 +77,10 @@ def new_image(request):
     else:
         form = ImageForm()
     return render(request, 'image.html', {"form": form})
+
+def project(request):
+    try:
+        post = Post.objects.all()
+    except DoesNotExist:
+        raise Http404()
+    return render(request,"project.html",locals())
