@@ -37,4 +37,12 @@ class Post(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
 
 
+
+class tags(models.Model):
+    post = models.ForeignKey(Post, related_name='tags', null=True)
+    post_date = models.DateTimeField(auto_now_add=True, null=True)
+    tag = models.CharField(max_length=50, null=True)
+
+
+
     
