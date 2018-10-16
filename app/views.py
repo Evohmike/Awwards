@@ -78,9 +78,16 @@ def new_image(request):
         form = ImageForm()
     return render(request, 'image.html', {"form": form})
 
-def project(request):
+# def project(request):
+#     try:
+#         post = Post.objects.get(id = post_id)
+#     except DoesNotExist:
+#         raise Http404()
+#     return render(request,"project.html",locals())
+
+def post(request,post_id):
     try:
-        post = Post.objects.all()
+        post = Post.objects.get(id = post_id)
     except DoesNotExist:
         raise Http404()
-    return render(request,"project.html",locals())
+    return render(request,"post.html",{"post":post})
