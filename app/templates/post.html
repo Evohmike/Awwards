@@ -1,0 +1,62 @@
+{%extends 'base.html'%} 
+{% block content %}
+
+<div class="project-detail">
+  <div class="container-fluid showcase">
+
+    <div class="container">
+      <br>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col m6">
+          <div class="row">
+            <div class="row">
+              <h1 class="text-center">{{post.title}}</h1>
+            </div>
+            <div class="row">
+              {% autoescape on %} {{post.post| safe}} {% endautoescape %}
+
+            </div>
+          </div>
+
+          <div class="row">
+            <p>Posted {{post.pub_date|timesince}} ago by {{post.editor.username}}</p>
+          </div>
+
+          <br><br>
+
+          <div class="row">
+            <p>Link to live site: </p>
+          </div>
+          <br>
+          <br>
+          <div class="row">
+            <h3>Rating: 0</h3>
+          </div>
+        </div>
+        <div class="col m6">
+          <img src="{{post.project_image.url}}" class="img-responsive project-art" alt="">
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <br>
+    </div>
+
+  </div>
+
+  <br><br>
+  
+  <div class="container-fluid white-text">
+    <div class="container">
+      <h3 class="center-align">Reviews</h3>
+      <br><br>
+
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

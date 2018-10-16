@@ -1,0 +1,31 @@
+
+{%load bootstrap4%}
+{%load static%}
+{% block styles %}
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+{% endblock %}
+
+</head>
+
+<body>
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+                <form  action="{%url 'new-image'%}" method="post" enctype="multipart/form-data">
+                    {%csrf_token%}
+                
+                    {% bootstrap_form form%}
+                    <input type="submit" class="btn btn-outline-success btn-sm" value="Post">
+                </form>
+        </div>
+    </div>
+</div>
+  
+
+   {% block scripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  {% bootstrap_javascript %} 
+  {% endblock %}
+
+</body>
