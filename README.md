@@ -21,7 +21,7 @@ Find the specs [here]()
 
 ### Clone the Repo
 Run the following command on the terminal:
-`git clone https://github.com/Evohmike/Just-Like-Instagram.git && cd Instagram`
+`git clone https://github.com/Evohmike/Awwards.git && cd Awwards`
 
 ### Activate virtual environment
 Activate virtual environment using python3.6 as default handler
