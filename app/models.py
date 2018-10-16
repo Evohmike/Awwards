@@ -33,6 +33,7 @@ class Profile(models.Model):
 
 
 class Post(models.Model):
+    title = models.CharField(max_length =60)
     uploaded_by = models.ForeignKey(User,null=True,related_name='posts')
     country = models.CharField(max_length=50, null=True)
     name = models.CharField(max_length=200, null=True)
@@ -40,10 +41,24 @@ class Post(models.Model):
     description = models.TextField(blank=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 
+
+    def __str__(self):
+        return self.title
+
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
+
     @classmethod
-    def display_projects(cls):
+    def display_post(cls):
         Post=cls.objects.all()
         return Posts
+
+    # def get_one_post(self, post_id):
+    #     return self.objects.get(pk=post_id)
+
 
 
 
