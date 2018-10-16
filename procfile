@@ -1,1 +1,0 @@
-web: gunicorn awwards.wsgi
