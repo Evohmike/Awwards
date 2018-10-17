@@ -13,3 +13,19 @@ class ImageForm(forms.ModelForm):
     class Meta:
         model = Post
         exclude = ['user']
+
+
+class DesignForm(forms.ModelForm):
+   class Meta:
+       model = DesignRating
+       fields = ['rating']
+
+class UsabilityForm(forms.ModelForm):
+   class Meta:
+       model = UsabilityRating
+       fields = ['rating']
+
+class ContentForm(forms.ModelForm):
+   class Meta:
+       model = ContentRating
+       fields = ['rating']
