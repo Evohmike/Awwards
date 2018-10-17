@@ -29,3 +29,9 @@ class ContentForm(forms.ModelForm):
    class Meta:
        model = ContentRating
        fields = ['rating']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ['user', 'post']
+        fields = ['comment'] 
