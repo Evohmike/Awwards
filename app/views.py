@@ -76,10 +76,12 @@ def new_image(request):
 
     else:
         form = ImageForm()
-    return render(request, 'image.html', {"form": form})
+    return render(request, 'image.html', locals())
 
 
 def post(request,post_id):
+    comment_form = CommentForm()
+
     form = DesignForm()
     form = UsabilityForm()
     form = ContentForm()
@@ -89,13 +91,6 @@ def post(request,post_id):
         raise Http404()
     return render(request,"post.html",locals())
 
-
-def profile(request, user_id):
-    title = "Profile"
-    pros= Project.get_pro_by_user(id= user_id).order_by('-posted_on')
-    profiles = Profile.objects.get(user_id=user_id)
-    users = User.objects.get(id=user_id)
-    return render(request, 'profile/profile.html', locals())
 
 
 def add_design(request, id):
@@ -108,11 +103,11 @@ def add_design(request, id):
            rate.user_name = request.user
            rate.profile = request.user.profile
            rate.save()
-       return redirect('new-image')
+       return redirect('post', id)
    else:
        form = DesignForm()
 
-   return render(request, 'image.html',{'form': form})
+   return render(request, 'post.html',{'form': form})
 
 def add_usability(request, id):
    project = get_object_or_404(Post, pk=id)
@@ -125,11 +120,11 @@ def add_usability(request, id):
            rate.profile = request.user.profile
 
            rate.save()
-       return redirect('new-image')
+       return redirect('post',id)
    else:
        form = UsabilityForm()
 
-   return render(request, 'image.html',{'form': form})
+   return render(request, 'post.html',{'form': form})
 
 def add_content(request, id):
    project = get_object_or_404(Post, pk=id)
@@ -142,11 +137,11 @@ def add_content(request, id):
            rate.profile = request.user.profile
 
            rate.save()
-       return redirect('new-image')
+       return redirect('post',id)
    else:
        form = ContentForm()
 
-   return render(request, 'image.html',{'form': form})
+   return render(request, 'post.html',{'form': form})
 
 def search_projects(request):
 
@@ -160,4 +155,16 @@ def search_projects(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'search.html',{"message":message})
+
+def comment(request,id):
+    upload = Post.objects.get(id=id)
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            # comment.user = request.user
+            comment.post= upload
+            comment.save()
+            print(comment)
+        return redirect('post',id)
 
