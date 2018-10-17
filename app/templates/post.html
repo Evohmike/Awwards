@@ -1,37 +1,28 @@
-{%extends 'base.html'%} 
-{% load bootstrap4 %} 
-{% block content %}
+{%extends 'base.html'%} {% load bootstrap4 %} {% block content %}
 
 <div class="project-detail">
-  <div class="container-fluid showcase">
-
+  <div class="container-fluid ">
     <div class="container">
-      <br>
-      <br>
-      <br>
       <div class="row">
         <div class="col m6">
           <div class="row">
             <div class="row">
               <h1 class="text-center">{{post.title}}</h1>
             </div>
+            <div class="col m6">
+              <img src="{{post.project_image.url}}" class="img-responsive project-art" alt="">
+            </div>
             <div class="row">
               {% autoescape on %} {{post.post| safe}} {% endautoescape %}
-
             </div>
           </div>
 
           <div class="row">
             <p>Posted {{post.pub_date|timesince}} ago by : {{post.uploaded_by.username}}</p>
           </div>
-
-          <br><br>
-
           <div class="row">
-            <p>Link to live site:{{post.link}}</p>
+            <p>Link to live site:</p><a href="{{post.link}}"> {{post.link}}</a>
           </div>
-          <br>
-          <br>
           <div class="row">
 
             <ul class="list-inline">
@@ -69,33 +60,25 @@
                   </p>
               </li>
             </ul>
-
-
-
           </div>
         </div>
-        <div class="col m6">
-          <img src="{{post.project_image.url}}" class="img-responsive project-art" alt="">
-        </div>
       </div>
-
-      <br>
-      <br>
-      <br>
     </div>
-
   </div>
-
-  <br><br>
 
   <div class="container-fluid white-text">
     <div class="container">
       <h3 class="center-align">Reviews</h3>
-      <br><br>
-
+      {% for comment in post.comments.all %}
+      <p><strong>{{ comment.user.username }}</strong>:{{comment.comment}} </p>
+      {% endfor %}
+      <form id='comment' action="/comment/{{post.id}}" method="post" enctype="multipart/form-data">
+        {%csrf_token%} {% bootstrap_form comment_form %}
+        <input type="submit" class="btn btn-primary btn-sm" value="comment">
+      </form>
     </div>
-
   </div>
 </div>
+
 
 {% endblock %}
