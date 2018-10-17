@@ -1,4 +1,5 @@
 {%extends 'base.html'%} 
+{% load bootstrap4 %} 
 {% block content %}
 
 <div class="project-detail">
@@ -21,18 +22,56 @@
           </div>
 
           <div class="row">
-            <p>Posted {{post.pub_date|timesince}} ago by {{post.editor.username}}</p>
+            <p>Posted {{post.pub_date|timesince}} ago by : {{post.uploaded_by.username}}</p>
           </div>
 
           <br><br>
 
           <div class="row">
-            <p>Link to live site: </p>
+            <p>Link to live site:{{post.link}}</p>
           </div>
           <br>
           <br>
           <div class="row">
-            <h3>Rating: 0</h3>
+
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <h4>Rate By Design</h4>
+                <form action="/project/{{post.id}}/review_design/" method="POST">
+                  {%csrf_token%} {% bootstrap_form form layout='inline' %}
+                  <input type="submit" value="Rate">
+                </form>
+                <p>{{ post.rating.count }}
+                  <p style="color: green;">Design
+                    </h5> average = {{ post.average_design | floatformat }}
+                  </p>
+              </li>
+              <li class="list-inline-item">
+                <h4>Rate By Content</h4>
+                <form action="/project/{{post.id}}/review_content/" method="POST">
+                  {%csrf_token%} {% bootstrap_form form layout='inline' %}
+                  <input type="submit" value="Rate">
+                </form>
+                <p>{{ post.rating.count }}
+                  <p style="color: green;">Content
+                    </h5> average = {{ post.average_content | floatformat }}
+                  </p>
+              </li>
+              <li class="list-inline-item">
+                <h4>Rate By Usability</h4>
+                <form action="/project/{{post.id}}/review_usability/" method="POST">
+                  {%csrf_token%} {% bootstrap_form form layout='inline' %}
+                  <input type="submit" value="Rate">
+                </form>
+                <p>{{ post.rating.count }}
+                  <p style="color: green;">Usability
+                    </h5> average = {{ post.average_usability | floatformat }}
+                  </p>
+              </li>
+            </ul>
+
+
+
           </div>
         </div>
         <div class="col m6">
@@ -48,7 +87,7 @@
   </div>
 
   <br><br>
-  
+
   <div class="container-fluid white-text">
     <div class="container">
       <h3 class="center-align">Reviews</h3>
