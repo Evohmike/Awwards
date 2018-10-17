@@ -1,9 +1,7 @@
-{%extends 'base.html'%} 
-{% block content %} 
-{{ block.super }}
+{%extends 'base.html'%} {% block content %} {{ block.super }}
 
-<div class="container-fluid" style="background-image: url(/static/images/cover-2.jpg);background-repeat: no-repeat;">
-    <div class="header" style="height: 80vh; font-family: 'Encode Sans Expanded', sans-serif;">
+<div class="container-fluid" style=" height: 70vh; background-image: url(/static/images/cover-2.jpg);background-repeat: no-repeat;">
+    <div class="header" style=" font-family: 'Encode Sans Expanded', sans-serif;">
         <div class="container" style="color:white;">
             <div class="row" style="padding-top:50px;">
                 <div class="col-md-4">
@@ -37,68 +35,64 @@
             </div>
         </div>
     </div>
+</div>
 
-
-
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <hr>
-    <h3 class="center-align"> Projects</h3>
-
-
-    <div class="row">
-        {% for project in projects %}
-    <div class="col-md-3">
-
-        
-        <!-- Card -->
-        <a href="/post/{{project.id}}">
-        <div class="card">
-
-            <!-- Card image -->
-            <div class="view overlay">
-                <img class="card-img-top" src="{{project.project_image.url}}" alt="Card image cap">
-                
-                <a>
-                    <div class="mask rgba-white-slight"></div>
-                </a>
-            </div>
-
-            <!-- Card content -->
-            <div class="card-body">
-
-                <!-- Title -->
-                <h4 class="card-title">{{project.title}}</h4>
-                <hr>
-                <!-- Text -->
-                <p>{{project.description}}</p>
-                <hr>
-                <p>Posted by : {{project.uploaded_by}}</p>
-                <hr>
-                <p>Country : {{project.country}}</p>
-                <hr>
-            </div>
-            <!-- Card footer -->
-            <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
-                <ul class="list-unstyled list-inline font-small">
-                    <li class="list-inline-item pr-2 white-text"><i class="fa fa-clock-o pr-1"></i>{{project.pub_date}}</li>
-                    <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fa fa-comments-o pr-1"></i>12</a></li>
-                    <li class="list-inline-item"><a href="#" class="white-text"><i class="fa fa-twitter pr-1"> </i>5</a></li>
-                </ul>
-            </div>
-
-        </div></a>
-        <!-- Card -->
+<div class="container-fluid" style="margin-top:50px;">
+    <div class="" style="text-align:center;">
+        <h3 class="center"> Projects</h3>
     </div>
-
-        {% empty %}
+    <div class="section" style="margin-left:5%; margin-right:5%;">
         <div class="row">
-            <h2 class="text-center">There No Project Items</h2>
+
+            {% for project in projects %}
+            <div class="col-md-4">
+                <!-- Card -->
+                <a href="/post/{{project.id}}">
+                    <div class="card">
+
+                        <!-- Card image -->
+                        <div class="view overlay">
+                            <img class="card-img-top" src="{{project.project_image.url}}" alt="Card image cap">
+
+                            <a>
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="card-body">
+
+                            <!-- Title -->
+                            <h4 class="card-title">{{project.title}}</h4>
+                            <hr>
+                            <!-- Text -->
+                            <p>{{project.description}}</p>
+                            <hr>
+                            <p>Posted by : {{project.uploaded_by}}</p>
+                            <hr>
+                            <p>Country : {{project.country}}</p>
+                            <hr>
+                        </div>
+                        <!-- Card footer -->
+                        <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                            <ul class="list-unstyled list-inline font-small">
+                                <li class="list-inline-item pr-2 white-text"><i class="fa fa-clock-o pr-1"></i>{{project.pub_date}}</li>
+                                <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fa fa-comments-o pr-1"></i>12</a></li>
+                                <li class="list-inline-item"><a href="#" class="white-text"><i class="fa fa-twitter pr-1">
+                                        </i>5</a></li>
+                            </ul>
+                        </div>
+
+                    </div></a>
+                <!-- Card -->
+            </div>
+
+            {% empty %}
+            <div class="row">
+                <h2 class="text-center">There No Project Items</h2>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 
 </div>
