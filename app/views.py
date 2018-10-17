@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate
-from .forms import SignupForm, ImageForm
+from .forms import *
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 
 from django.contrib.auth.decorators import login_required
-from .models import Post,Profile,tags
+from .models import *
 
 
 
@@ -78,16 +78,86 @@ def new_image(request):
         form = ImageForm()
     return render(request, 'image.html', {"form": form})
 
-# def project(request):
-#     try:
-#         post = Post.objects.get(id = post_id)
-#     except DoesNotExist:
-#         raise Http404()
-#     return render(request,"project.html",locals())
 
 def post(request,post_id):
+    form = DesignForm()
+    form = UsabilityForm()
+    form = ContentForm()
     try:
         post = Post.objects.get(id = post_id)
     except DoesNotExist:
         raise Http404()
-    return render(request,"post.html",{"post":post})
+    return render(request,"post.html",locals())
+
+
+def profile(request, user_id):
+    title = "Profile"
+    pros= Project.get_pro_by_user(id= user_id).order_by('-posted_on')
+    profiles = Profile.objects.get(user_id=user_id)
+    users = User.objects.get(id=user_id)
+    return render(request, 'profile/profile.html', locals())
+
+
+def add_design(request, id):
+   project = get_object_or_404(Post, pk=id)
+   if request.method == 'POST':
+       form = DesignForm(request.POST)
+       if form.is_valid():
+           rate = form.save(commit=False)
+           rate.project = project
+           rate.user_name = request.user
+           rate.profile = request.user.profile
+           rate.save()
+       return redirect('new-image')
+   else:
+       form = DesignForm()
+
+   return render(request, 'image.html',{'form': form})
+
+def add_usability(request, id):
+   project = get_object_or_404(Post, pk=id)
+   if request.method == 'POST':
+       form = UsabilityForm(request.POST)
+       if form.is_valid():
+           rate = form.save(commit=False)
+           rate.project = project
+           rate.user_name = request.user
+           rate.profile = request.user.profile
+
+           rate.save()
+       return redirect('new-image')
+   else:
+       form = UsabilityForm()
+
+   return render(request, 'image.html',{'form': form})
+
+def add_content(request, id):
+   project = get_object_or_404(Post, pk=id)
+   if request.method == 'POST':
+       form = ContentForm(request.POST)
+       if form.is_valid():
+           rate = form.save(commit=False)
+           rate.project = project
+           rate.user_name = request.user
+           rate.profile = request.user.profile
+
+           rate.save()
+       return redirect('new-image')
+   else:
+       form = ContentForm()
+
+   return render(request, 'image.html',{'form': form})
+
+def search_projects(request):
+
+    if 'post' in request.GET and request.GET["post"]:
+        search_term = request.GET.get("post")
+        searched_projects = Project.search_by_title(search_term)
+        message = f"{search_term}"
+
+        return render(request, 'search.html',{"message":message,"post": searched_projects})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search.html',{"message":message})
+
