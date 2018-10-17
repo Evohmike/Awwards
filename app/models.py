@@ -41,11 +41,11 @@ class Post(models.Model):
     Class that contains Post details
     """
     title = models.CharField(max_length =60)
-    uploaded_by = models.ForeignKey(User,null=True,related_name='posts')
-    country = models.CharField(max_length=50, null=True)
     project_image = models.ImageField(upload_to='site-image/',null=True)
     description = models.TextField(blank=True)
     link = models.URLField(max_length = 100)
+    uploaded_by = models.ForeignKey(User,null=True,related_name='posts')
+    country = models.CharField(max_length=50, null=True)
     pub_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -144,3 +144,11 @@ class UsabilityRating(models.Model):
    pub_date = models.DateTimeField(auto_now=True)
    profile = models.ForeignKey(Profile)
    rating = models.IntegerField(choices=RATING_CHOICES, default=0)
+
+
+class Comment(models.Model):
+    comment = models.CharField(max_length =80,null=True)
+    user = models.ForeignKey(Profile,null=True)
+    post = models.ForeignKey(Post,related_name='comments',blank=True,null=True)
+    def __str__(self):
+        return self.comment 
