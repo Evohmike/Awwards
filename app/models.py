@@ -29,11 +29,20 @@ class Profile(models.Model):
     occupation = models.CharField(max_length=300, null=True)
     bio = models.TextField(blank=True)
 
+    def save_profile(self):
+        self.save()
 
-    
+    def del_profile(self):
+        self.delete()
+
+    @classmethod
+    def get_by_id(cls, user_id):
+            profile = Profile.objects.get(user_id = user_id)
+            return profile
 
     def __str__(self):
-        return self.first_name
+        return self.name
+
 
 
 class Post(models.Model):
@@ -62,6 +71,17 @@ class Post(models.Model):
     def display_post(cls):
         Post=cls.objects.all()
         return Posts
+
+    @classmethod
+    def get_project_by_id(cls, id):
+        project = cls.objects.get(id=id)
+        return project
+
+    @classmethod
+    def get_project_by_user(cls, id):
+        project = cls.objects.filter(uploaded_by=id).all()
+        return project
+
 
     @classmethod
     def search_by_title(cls,search_term):
