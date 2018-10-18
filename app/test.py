@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Profile, Project
+from .models import Profile, Post
 from django.contrib.auth.models import User
 
 
@@ -10,7 +10,6 @@ class ProfileTestClass(TestCase):
     def setUp(self):
 
         self.user = User.objects.create(id =1,username='a')
-        #creating an new profile
         self.profile = Profile(profile_pic='dex.jpg', bio='This is me', contact=2356576882,user=self.user)
 
     def test_instance(self):
@@ -59,19 +58,18 @@ class PostClass(TestCase):
     def setUp(self):
 
         self.user = User.objects.create(id =1,username='a')
-        #creating an new profile
         self.profile = Profile(profile_pic='dex.jpg', bio='This is me', contact="1234567",user=self.user)
         self.profile.save_profile()
-        self.project = Project(title='projects',landing_page='land.jpg', description='This projects', link='https://www.test.com', profile=self.profile, user=self.user)
+        self.post = Post(title='projects',home='pic1.jpg', description='This projects', link='https://www.test.com', profile=self.profile, user=self.user)
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.project, Project))
+        self.assertTrue(isinstance(self.post, Post))
 
     def test_save_method(self):
         """
         Function to test that project is being saved
         """
-        self.project.save_pro()
+        self.post.save_pro()
         projects = Project.objects.all()
         self.assertTrue(len(projects) > 0)
 
@@ -79,14 +77,14 @@ class PostClass(TestCase):
         """
         Function to test that a project can be deleted
         """
-        self.project.save_pro()
-        self.project.del_pro()
+        self.post.save_pro()
+        self.post.del_pro()
 
     def test_update_method(self):
         """
         Function to test that a project's details can be updated
         """
-        self.project.save_pro()
-        new_project = Project.objects.filter(title='projects').update(title='New one')
-        projects = Project.objects.get(title='New one')
+        self.post.save_pro()
+        new_post = Post.objects.filter(title='projects').update(title='New one')
+        projects = Post.objects.get(title='New one')
         self.assertTrue(projects.title, 'New one')
