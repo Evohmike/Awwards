@@ -9,6 +9,8 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
+import datetime as dt
+
 
 from django.contrib.auth.decorators import login_required
 from .models import *
@@ -63,7 +65,7 @@ def home(request):
     projects=Post.objects.all()
     return render(request, 'home.html',{"projects":projects})
 
-
+@login_required(login_url='/signup/')
 def new_image(request):
     current_user = request.user
     if request.method == 'POST':
@@ -79,6 +81,22 @@ def new_image(request):
     return render(request, 'image.html', locals())
 
 
+@login_required(login_url='/signup/')
+def profile(request, user_id):
+    title = "Profile"
+    projo= Post.get_project_by_user(id= user_id).order_by('-posted_on')
+    profiles = Profile.objects.get(user_id=user_id)
+    users = User.objects.get(id=user_id)
+    return render(request, 'profile/profile.html', locals())
+
+def view_project(request, id):
+    title = "View Project"
+    project = Project.get_project_by_id(id=id)
+  
+    return render(request, 'view_project.html', locals())
+
+
+@login_required(login_url='/signup/')
 def post(request,post_id):
     comment_form = CommentForm()
 
@@ -167,4 +185,7 @@ def comment(request,id):
             comment.save()
             print(comment)
         return redirect('post',id)
+
+
+
 
