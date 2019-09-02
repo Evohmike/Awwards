@@ -66,7 +66,7 @@ python3.6 manage.py runserver
 Open terminal on `localhost:8000`
 
 ## Known bugs
-No bugs e
+No bugs 
 
 ## Technologies used
     - Python 3.6
